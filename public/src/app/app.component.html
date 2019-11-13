@@ -1,0 +1,38 @@
+
+<!-- <h1>{{title}}</h1> -->
+<div class="container root">
+  <div class="row">
+    <div class="col-4">
+      <ul *ngIf="tTask">
+        <div *ngFor="let task of tTask">
+          <li>Title:{{ task.title}}  Description:{{task.description}}</li>
+          <button (click)="editTaskForm(task._id)">Edit</button>
+          <button (click)="deleteTask(task._id)">Delete</button>
+        </div>
+      </ul>
+    </div>
+    <div *ngIf="toUpdateTask  && editTask" class="col-4">
+      {{ editTask | json}}
+      <form (submit)="updateTask()">
+        <input [(ngModel)]="editTask.title" type="text" class="form-control" name="title">
+        <input [(ngModel)]="editTask.description" type="text" class="form-control" name="description">
+        <button type="submit">Create</button>
+      </form>
+      <div *ngIf="onUpdateErrors">
+        <p class="text-danger" *ngFor="let error of onUpdateErrors">{{ error }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <h3>Add Task</h3>
+    {{ task | json }}
+    <form (submit)="onSubmit()" method="post">
+      <input [(ngModel)]="task.title" type="text" class="form-control" name="title">
+      <input [(ngModel)]="task.description" type="text" class="form-control" name="description">
+      <button type="submit">Create</button>
+    </form>
+    <div *ngIf="onCreateErrors">
+      <p class="text-danger" *ngFor="let error of onCreateErrors">{{ error }}</p>
+    </div>
+  </div>
+</div>
